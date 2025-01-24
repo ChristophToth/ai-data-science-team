@@ -23,7 +23,7 @@ from ai_data_science_team.agents import SQLDatabaseAgent
 
 # MODIFY THIS TO YOUR DATABASE PATH IF YOU WANT TO USE A DIFFERENT DATABASE
 DB_OPTIONS = {
-    "Northwind Database": "sqlite:///data/northwind.db",
+    "Northwind Database": "/Users/chrissmac/Documents/GitHub/ai-data-science-team/data/northwind.db",
 }
 
 MODEL_LIST = ['gpt-4o-mini', 'gpt-4o']
