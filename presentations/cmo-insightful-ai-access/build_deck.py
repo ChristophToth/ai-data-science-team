@@ -170,38 +170,50 @@ def build():
     # 2 The ask
     s = new()
     bar(s)
-    add_textbox(s, Inches(0.6), Inches(0.4), Inches(12), Inches(0.5), "The ask", size=28, bold=True, color=ATT_DARK)
-    add_textbox(s, Inches(0.6), Inches(1.1), Inches(12), Inches(0.6), "Approve a dual-track approach to Insightful AI access.", size=20, color=BLACK)
-    card(s, Inches(0.6), Inches(2.0), Inches(5.8), Inches(3.8))
-    add_textbox(s, Inches(0.9), Inches(2.25), Inches(5.2), Inches(0.4), "PRIMARY — NOW", size=12, bold=True, color=ATT_ORANGE)
-    add_textbox(s, Inches(0.9), Inches(2.7), Inches(5.2), Inches(0.8), "Sign on for MCP (preferred) and API", size=22, bold=True, color=ATT_DARK)
+    add_textbox(s, Inches(0.6), Inches(0.35), Inches(12), Inches(0.45), "The ask", size=28, bold=True, color=ATT_DARK)
+    add_textbox(
+        s,
+        Inches(0.6),
+        Inches(0.9),
+        Inches(12),
+        Inches(0.45),
+        "Today, content and the AI assistant live only in Insightful (Stravito, AT&T-branded).",
+        size=16,
+        color=GRAY,
+    )
+    add_textbox(s, Inches(0.6), Inches(1.35), Inches(12), Inches(0.4), "Approve MCP or API access by use case. Keep the knowledge domain as a separate goal.", size=18, bold=True, color=BLACK)
+    card(s, Inches(0.6), Inches(1.95), Inches(5.8), Inches(4.0))
+    add_textbox(s, Inches(0.9), Inches(2.2), Inches(5.2), Inches(0.35), "NEAR-TERM — BY USE CASE", size=12, bold=True, color=ATT_ORANGE)
+    add_textbox(s, Inches(0.9), Inches(2.65), Inches(5.2), Inches(0.9), "Approve MCP or API access to live Insightful", size=20, bold=True, color=ATT_DARK)
     add_paras(
         s,
         Inches(0.9),
-        Inches(3.6),
+        Inches(3.7),
         Inches(5.2),
         Inches(2.0),
         [
-            "Gives teams building agents and AI-backed tools a governed way to pull Insightful knowledge into their work.",
-            "Solves immediate demand and reduces shadow integrations.",
+            "Agents / agent platforms → MCP",
+            "Custom apps / backends → API",
+            "Same live Insightful knowledge. Right pipe for each project. Stops workarounds.",
         ],
-        size=15,
+        size=14,
         color=GRAY,
     )
-    card(s, Inches(6.8), Inches(2.0), Inches(5.8), Inches(3.8))
-    add_textbox(s, Inches(7.1), Inches(2.25), Inches(5.2), Inches(0.4), "STRATEGIC — PARALLEL", size=12, bold=True, color=ATT_BLUE)
-    add_textbox(s, Inches(7.1), Inches(2.7), Inches(5.2), Inches(0.8), "Advance Ask AT&T knowledge domain", size=22, bold=True, color=ATT_DARK)
+    card(s, Inches(6.8), Inches(1.95), Inches(5.8), Inches(4.0))
+    add_textbox(s, Inches(7.1), Inches(2.2), Inches(5.2), Inches(0.35), "SEPARATE GOAL", size=12, bold=True, color=ATT_BLUE)
+    add_textbox(s, Inches(7.1), Inches(2.65), Inches(5.2), Inches(0.9), "Advance Ask AT&T knowledge domain", size=20, bold=True, color=ATT_DARK)
     add_paras(
         s,
         Inches(7.1),
-        Inches(3.6),
+        Inches(3.7),
         Inches(5.2),
         Inches(2.0),
         [
-            "Corpus copy + metadata already uploaded for security. Next: golden questions, truth answers, governance, stewards.",
-            "Treat as a side goal we invest in — not the near-term demand fix.",
+            "Security copy (content + metadata) already uploaded.",
+            "Next: golden questions, truth answers, governance, stewards.",
+            "Not the near-term demand fix — its own investment track.",
         ],
-        size=15,
+        size=14,
         color=GRAY,
     )
     footer(s, page)
@@ -436,9 +448,9 @@ def build():
     v_line(s, Inches(10.9), Inches(2.1), Inches(0.35), ATT_DARK)
 
     # Protocol layer
-    wire_box(s, Inches(0.5), Inches(2.5), Inches(3.7), Inches(1.05), "MCP  ·  PRIMARY NOW", "Tool calls: search · retrieve · cite\nLive Insightful, agent-native", fill=WHITE, title_color=ATT_ORANGE, border=ATT_ORANGE)
-    wire_box(s, Inches(4.8), Inches(2.5), Inches(3.7), Inches(1.05), "API  ·  COMPANION NOW", "REST Search / Lookup / logs\nLive Insightful for custom apps", fill=WHITE, title_color=ATT_BLUE, border=ATT_BLUE)
-    wire_box(s, Inches(9.1), Inches(2.5), Inches(3.7), Inches(1.05), "Knowledge domain  ·  SIDE GOAL", "Q&A on secured copy + metadata\nAsk Docs golden-question path", fill=WHITE, title_color=ATT_DARK, border=ATT_DARK)
+    wire_box(s, Inches(0.5), Inches(2.5), Inches(3.7), Inches(1.05), "MCP  ·  BY USE CASE", "Agents / agent platforms\nLive Insightful tool calls", fill=WHITE, title_color=ATT_ORANGE, border=ATT_ORANGE)
+    wire_box(s, Inches(4.8), Inches(2.5), Inches(3.7), Inches(1.05), "API  ·  BY USE CASE", "Custom apps / backends\nLive Search / Lookup", fill=WHITE, title_color=ATT_BLUE, border=ATT_BLUE)
+    wire_box(s, Inches(9.1), Inches(2.5), Inches(3.7), Inches(1.05), "Knowledge domain  ·  SEPARATE", "Ask AT&T Q&A on secured copy\nGolden-question quality path", fill=WHITE, title_color=ATT_DARK, border=ATT_DARK)
 
     # Merge lines into live platform (left two) vs copy (right)
     v_line(s, Inches(2.3), Inches(3.55), Inches(0.4), ATT_ORANGE)
@@ -498,7 +510,7 @@ def build():
         Inches(1.4),
         Inches(11.4),
         Inches(1.1),
-        "Sign on for MCP as the primary path for agent builders; enable API alongside it for custom AI tools. Advance the Ask AT&T knowledge domain as a strategic side investment — not the near-term demand solution.",
+        "Approve MCP or API access to live Insightful based on use case. Treat the Ask AT&T knowledge domain as a separate goal — not the near-term demand solution.",
         size=18,
         color=WHITE,
     )
@@ -509,9 +521,9 @@ def build():
         Inches(12),
         Inches(3.5),
         [
-            "Why MCP first for agents: it is the cleanest way for AI tools to call Insightful as a governed capability — search, retrieve, cite — without each team inventing a private pipeline.",
-            "Why API with it: many AT&T apps will not speak MCP yet; Search/Lookup covers those surfaces with the same live knowledge.",
-            "Why domain stays strategic: security already drove a full copy into Ask Docs. That investment is real — and unfinished. Completing it requires golden questions, stewards, and operating cadence before it can rival Insightful’s curated experience.",
+            "Today: content and the AI assistant exist only inside Insightful (Stravito, AT&T-branded). That is the live system of engagement.",
+            "By use case: agents / agent platforms → MCP. Custom apps / backends → API. Neither pipe alone covers every AI project — choose the right one per request.",
+            "Separate goal: Ask AT&T domain copy is uploaded for security. Completing it needs golden questions, stewards, and governance before it earns broad trust.",
         ],
         size=15,
         color=GRAY,
@@ -711,10 +723,10 @@ def build():
     bar(s)
     add_textbox(s, Inches(0.6), Inches(0.35), Inches(12), Inches(0.45), "Decision requested", size=28, bold=True, color=ATT_DARK)
     cards_data = [
-        ("1", "Approve MCP + API path", "Authorize commercial/security engagement to enable Insightful MCP and API for sanctioned AI projects."),
-        ("2", "Name program owners", "Assign MCP/API owner and interim Knowledge Steward; confirm SME panel."),
-        ("3", "Fund domain as side goal", "Endorse golden-question stand-up and steward operating model — without blocking agent demand on domain go-live."),
-        ("4", "Set access policy", "CMO-backed rules: who gets MCP/API credentials; who gets Ask AT&T domain access; anti-workaround stance."),
+        ("1", "Approve MCP or API by use case", "Authorize commercial/security engagement so sanctioned AI projects can get MCP or API access to live Insightful based on need."),
+        ("2", "Name program owners", "Assign access owner (MCP/API intake) and interim Knowledge Steward; confirm SME panel."),
+        ("3", "Fund domain as separate goal", "Endorse golden-question stand-up and steward model — without blocking demand on domain go-live."),
+        ("4", "Set access policy", "CMO-backed rules: which use cases get MCP vs API; who gets Ask AT&T domain access; anti-workaround stance."),
     ]
     for i, (n, t, b) in enumerate(cards_data):
         col = i % 2
@@ -734,14 +746,14 @@ def build():
     shape.fill.solid()
     shape.fill.fore_color.rgb = ATT_BLUE
     shape.line.fill.background()
-    add_textbox(s, Inches(0.9), Inches(2.2), Inches(11.5), Inches(1.2), "Serve demand with MCP + API.\nBuild the domain with discipline.", size=32, bold=True, color=WHITE)
+    add_textbox(s, Inches(0.9), Inches(2.2), Inches(11.5), Inches(1.2), "Approve the right pipe by use case.\nBuild the domain as its own goal.", size=32, bold=True, color=WHITE)
     add_textbox(
         s,
         Inches(0.9),
         Inches(3.8),
         Inches(11),
         Inches(1.2),
-        "That keeps Insightful’s proprietary advantage working for AT&T’s AI ecosystem —\nand keeps Ask AT&T on a path that is governed, tested, and staffed to last.",
+        "Keep content and assistant on live Insightful today — open MCP or API where teams need it —\nand staff Ask AT&T so the copy path is governed, tested, and ready when it earns trust.",
         size=16,
         color=MED_GRAY,
     )
