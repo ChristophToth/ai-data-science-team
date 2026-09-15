@@ -87,6 +87,51 @@ def card(slide, left, top, width, height, fill=LT_GRAY):
     return shape
 
 
+def rect(slide, left, top, width, height, fill, line=None):
+    shape = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, height)
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = fill
+    if line is None:
+        shape.line.fill.background()
+    else:
+        shape.line.color.rgb = line
+        shape.line.width = Pt(1.25)
+    return shape
+
+
+def wire_box(slide, left, top, width, height, title, subtitle="", fill=WHITE, title_color=ATT_DARK, border=ATT_BLUE):
+    shape = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left, top, width, height)
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = fill
+    shape.line.color.rgb = border
+    shape.line.width = Pt(1.5)
+    shape.adjustments[0] = 0.08
+    add_textbox(slide, left + Inches(0.12), top + Inches(0.12), width - Inches(0.24), Inches(0.35), title, size=12, bold=True, color=title_color, align=PP_ALIGN.CENTER)
+    if subtitle:
+        add_textbox(
+            slide,
+            left + Inches(0.1),
+            top + Inches(0.42),
+            width - Inches(0.2),
+            height - Inches(0.5),
+            subtitle,
+            size=10,
+            color=GRAY,
+            align=PP_ALIGN.CENTER,
+        )
+    return shape
+
+
+def h_line(slide, left, top, width, color=ATT_BLUE):
+    shape = rect(slide, left, top, width, Pt(2.5), color)
+    return shape
+
+
+def v_line(slide, left, top, height, color=ATT_BLUE):
+    shape = rect(slide, left, top, Pt(2.5), height, color)
+    return shape
+
+
 def build():
     prs = Presentation()
     prs.slide_width = W
@@ -365,7 +410,84 @@ def build():
     )
     footer(s, page)
 
-    # 9 Recommendation
+    # 9 Architecture wireframe — how the options connect
+    s = new()
+    bar(s)
+    add_textbox(s, Inches(0.5), Inches(0.28), Inches(12), Inches(0.4), "Architecture wireframe — how the options connect", size=24, bold=True, color=ATT_DARK)
+    add_textbox(
+        s,
+        Inches(0.5),
+        Inches(0.72),
+        Inches(12.3),
+        Inches(0.3),
+        "One source of curated knowledge. Three sanctioned connection patterns. No shadow copies.",
+        size=13,
+        color=GRAY,
+    )
+
+    # Top consumers
+    wire_box(s, Inches(0.5), Inches(1.15), Inches(3.7), Inches(0.95), "Agent builders", "Cursor / Copilot agents / internal agent platforms", fill=LT_GRAY, border=ATT_ORANGE)
+    wire_box(s, Inches(4.8), Inches(1.15), Inches(3.7), Inches(0.95), "Custom AI-backed tools", "Apps, intranet, backends needing Search / Lookup", fill=LT_GRAY, border=ATT_BLUE)
+    wire_box(s, Inches(9.1), Inches(1.15), Inches(3.7), Inches(0.95), "Employees via Ask AT&T", "Ask Docs Q&A experience", fill=LT_GRAY, border=ATT_DARK)
+
+    # Connector drops
+    v_line(s, Inches(2.3), Inches(2.1), Inches(0.35), ATT_ORANGE)
+    v_line(s, Inches(6.6), Inches(2.1), Inches(0.35), ATT_BLUE)
+    v_line(s, Inches(10.9), Inches(2.1), Inches(0.35), ATT_DARK)
+
+    # Protocol layer
+    wire_box(s, Inches(0.5), Inches(2.5), Inches(3.7), Inches(1.05), "MCP  ·  PRIMARY NOW", "Tool calls: search · retrieve · cite\nLive Insightful, agent-native", fill=WHITE, title_color=ATT_ORANGE, border=ATT_ORANGE)
+    wire_box(s, Inches(4.8), Inches(2.5), Inches(3.7), Inches(1.05), "API  ·  COMPANION NOW", "REST Search / Lookup / logs\nLive Insightful for custom apps", fill=WHITE, title_color=ATT_BLUE, border=ATT_BLUE)
+    wire_box(s, Inches(9.1), Inches(2.5), Inches(3.7), Inches(1.05), "Knowledge domain  ·  SIDE GOAL", "Q&A on secured copy + metadata\nAsk Docs golden-question path", fill=WHITE, title_color=ATT_DARK, border=ATT_DARK)
+
+    # Merge lines into live platform (left two) vs copy (right)
+    v_line(s, Inches(2.3), Inches(3.55), Inches(0.4), ATT_ORANGE)
+    v_line(s, Inches(6.6), Inches(3.55), Inches(0.4), ATT_BLUE)
+    h_line(s, Inches(2.3), Inches(3.95), Inches(4.3), ATT_BLUE)
+    v_line(s, Inches(4.45), Inches(3.95), Inches(0.35), ATT_BLUE)
+    v_line(s, Inches(10.9), Inches(3.55), Inches(0.75), ATT_DARK)
+
+    # Bottom systems
+    wire_box(
+        s,
+        Inches(0.9),
+        Inches(4.4),
+        Inches(6.6),
+        Inches(1.55),
+        "Insightful on Stravito  ·  LIVE SYSTEM OF ENGAGEMENT",
+        "Semantic layer · AT&T taxonomy · marketing-research assistant\nCurated collections · permissions · source of truth for MCP & API",
+        fill=RGBColor(0xE8, 0xF1, 0xF8),
+        title_color=ATT_DARK,
+        border=ATT_BLUE,
+    )
+    wire_box(
+        s,
+        Inches(8.3),
+        Inches(4.4),
+        Inches(4.5),
+        Inches(1.55),
+        "Ask AT&T domain COPY",
+        "Full content + metadata uploaded\nYou are here → golden questions\nSync / freshness required ongoing",
+        fill=RGBColor(0xF5, 0xF5, 0xF8),
+        title_color=ATT_DARK,
+        border=ATT_DARK,
+    )
+
+    # Legend strip
+    rect(s, Inches(0.5), Inches(6.2), Inches(12.3), Inches(0.65), LT_GRAY)
+    add_textbox(
+        s,
+        Inches(0.7),
+        Inches(6.32),
+        Inches(11.9),
+        Inches(0.45),
+        "Read left→right for demand: MCP/API unlock agents now against live Insightful.  Right path = security-driven copy for Ask AT&T — strategic, staffed, tested before broad trust.",
+        size=12,
+        color=GRAY,
+    )
+    footer(s, page)
+
+    # 10 Recommendation
     s = new()
     bar(s)
     add_textbox(s, Inches(0.6), Inches(0.4), Inches(12), Inches(0.5), "Recommendation", size=28, bold=True, color=ATT_DARK)
@@ -429,7 +551,84 @@ def build():
         add_textbox(s, left + Inches(0.2), top + Inches(0.75), Inches(3.5), Inches(1.3), b, size=13, color=GRAY)
     footer(s, page)
 
-    # 11 What domain needs (pitch)
+    # 12 Knowledge domain journey + timeframe
+    s = new()
+    bar(s)
+    add_textbox(s, Inches(0.5), Inches(0.28), Inches(12), Inches(0.4), "Knowledge domain journey — Q&A quality path and timeframe", size=22, bold=True, color=ATT_DARK)
+    add_textbox(
+        s,
+        Inches(0.5),
+        Inches(0.7),
+        Inches(12.3),
+        Inches(0.3),
+        "Indicative ~8–10 week stand-up to gated pilot, then ongoing steward operations. Calibrate to SME capacity.",
+        size=12,
+        color=GRAY,
+    )
+
+    # Timeline base line
+    h_line(s, Inches(0.7), Inches(1.55), Inches(11.9), MED_GRAY)
+
+    journey = [
+        ("DONE", "Corpus ready", "Content + metadata\ncopied into Ask Docs", ATT_BLUE, True),
+        ("Wks 1–2", "Design golden set", "50–150 Qs across\ntaxonomy & edge cases", ATT_ORANGE, True),
+        ("Wks 2–4", "Truth answers", "SME / steward writes\nexpected answers + cites", ATT_DARK, False),
+        ("Wks 4–5", "Blind run & score", "Ask Docs answers;\nscorecard vs truth", ATT_DARK, False),
+        ("Wks 5–8", "Tune & retest", "Fix retrieval / metadata;\nre-run to threshold", ATT_DARK, False),
+        ("Wk 8–9", "Gate go-live", "Policy + support +\nquality bar signed", ATT_DARK, False),
+        ("Ongoing", "Regression ops", "Re-test on sync /\nmodel change; steward", GREEN, False),
+    ]
+    n = len(journey)
+    span = 11.6
+    start_x = 0.75
+    for i, (when, title, detail, color, current) in enumerate(journey):
+        cx = start_x + (span * i / (n - 1))
+        # dot
+        dot = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(cx), Inches(1.42), Inches(0.28), Inches(0.28))
+        dot.fill.solid()
+        dot.fill.fore_color.rgb = color
+        dot.line.fill.background()
+        # card below or above alternating for readability — all below with vertical stub
+        v_line(s, Inches(cx + 0.12), Inches(1.7), Inches(0.25), color)
+        card_top = Inches(2.0)
+        fill = RGBColor(0xFF, 0xF3, 0xE0) if current and when != "DONE" else (RGBColor(0xE8, 0xF1, 0xF8) if when == "DONE" else LT_GRAY)
+        if when == "Ongoing":
+            fill = RGBColor(0xE8, 0xF5, 0xE9)
+        box_w = Inches(1.65)
+        left = Inches(cx - 0.68)
+        card(s, left, card_top, box_w, Inches(2.35), fill)
+        add_textbox(s, left + Inches(0.08), card_top + Inches(0.12), box_w - Inches(0.16), Inches(0.28), when, size=10, bold=True, color=color, align=PP_ALIGN.CENTER)
+        add_textbox(s, left + Inches(0.08), card_top + Inches(0.42), box_w - Inches(0.16), Inches(0.55), title, size=11, bold=True, color=ATT_DARK, align=PP_ALIGN.CENTER)
+        add_textbox(s, left + Inches(0.08), card_top + Inches(1.05), box_w - Inches(0.16), Inches(1.1), detail, size=10, color=GRAY, align=PP_ALIGN.CENTER)
+
+    # You are here callout
+    rect(s, Inches(0.5), Inches(4.55), Inches(12.3), Inches(1.0), RGBColor(0xFF, 0xF3, 0xE0))
+    add_textbox(s, Inches(0.7), Inches(4.65), Inches(3.2), Inches(0.35), "YOU ARE HERE", size=12, bold=True, color=ATT_ORANGE)
+    add_textbox(
+        s,
+        Inches(0.7),
+        Inches(5.0),
+        Inches(11.8),
+        Inches(0.45),
+        "Upload complete. Next critical path = design golden questions + truth answers with SME panel, then score Ask Docs before any broad access.",
+        size=13,
+        color=BLACK,
+    )
+
+    # Parallel note
+    add_textbox(
+        s,
+        Inches(0.5),
+        Inches(5.8),
+        Inches(12.3),
+        Inches(0.9),
+        "Parallel track (not on this timeline): MCP + API vendor enablement and security review can proceed immediately to serve agent demand — domain go-live is not a blocker.",
+        size=12,
+        color=GRAY,
+    )
+    footer(s, page)
+
+    # 13 What domain needs (pitch)
     s = new()
     bar(s)
     add_textbox(s, Inches(0.6), Inches(0.35), Inches(12), Inches(0.45), "Strategic investment: what the knowledge domain needs", size=24, bold=True, color=ATT_DARK)

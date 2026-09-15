@@ -23,6 +23,7 @@ python presentations/cmo-insightful-ai-access/build_deck.py
 1. AI curiosity ↑ → demand for Insightful in AI projects ↑  
 2. Three pressures: **Demand**, **Governance** (workarounds), **Proprietary lens** (why Stravito was chosen)  
 3. Three options: MCP / API / Ask AT&T knowledge domain  
-4. Recommend MCP + API now; domain as strategic parallel  
-5. Domain is at golden questions — show what “done” requires  
-6. Ask for decisions: enablement, owners, steward funding, access policy  
+4. **Architecture wireframe** — how consumers connect via MCP / API / domain to live Insightful vs Ask Docs copy  
+5. Recommend MCP + API now; domain as strategic parallel  
+6. Domain is at golden questions — **journey + ~8–10 week timeframe**  
+7. Ask for decisions: enablement, owners, steward funding, access policy  

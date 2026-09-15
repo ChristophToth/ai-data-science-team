@@ -37,6 +37,39 @@ Enable **MCP** as the primary pattern for agent builders; enable **API** for cus
 
 ---
 
+## Architecture wireframe (slide talking points)
+
+Walk top → bottom:
+
+1. **Who needs knowledge:** agent builders, custom AI tools, Ask AT&T employees  
+2. **How they connect:** MCP (primary now) · API (companion) · Knowledge domain (side goal)  
+3. **Where knowledge lives:**  
+   - Left: **live Insightful on Stravito** (MCP + API) — semantic layer, taxonomy, collections  
+   - Right: **Ask AT&T copy** — already uploaded; golden questions next; sync forever  
+
+Punch line: *sanctioned connections, no shadow copies.* MCP/API serve demand against the live system; domain is the security-backed Ask Docs path that still needs quality work.
+
+---
+
+## Domain journey & timeframe (slide talking points)
+
+Indicative **8–10 weeks** to gated pilot, then ongoing:
+
+| Stage | When | What |
+| --- | --- | --- |
+| Corpus ready | DONE | Content + metadata in Ask Docs |
+| Design golden set | Wks 1–2 | 50–150 questions |
+| Truth answers | Wks 2–4 | SME / steward expected answers + cites |
+| Blind run & score | Wks 4–5 | Scorecard vs truth |
+| Tune & retest | Wks 5–8 | Fix retrieval/metadata; hit threshold |
+| Gate go-live | Wk 8–9 | Policy + support + quality signed |
+| Regression ops | Ongoing | Re-test on sync/model change |
+
+**You are here:** between corpus ready and designing the golden set.  
+**Say out loud:** MCP + API enablement runs in parallel — domain go-live is not a blocker for agent demand.
+
+---
+
 ## Golden questions — how the process proceeds
 
 You are at the right stage. Treat this like a product QA harness for knowledge.
