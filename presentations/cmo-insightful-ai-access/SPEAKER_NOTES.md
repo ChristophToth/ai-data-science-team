@@ -2,7 +2,7 @@
 
 ## Opening
 
-AI curiosity across marketing is rising. So is interest in putting **Insightful** into agents and AI-backed tools. We need a sanctioned path — or teams will invent workarounds.
+AI curiosity across marketing is rising. So is interest in putting **Insightful** into agents and AI-backed tools. Today, content and the AI assistant live **only** in Insightful (Stravito, AT&T-branded). We need a sanctioned path out — or teams will invent workarounds.
 
 ## The three pressures
 
@@ -14,19 +14,16 @@ AI curiosity across marketing is rising. So is interest in putting **Insightful*
 
 ## Recommendation in one breath
 
-Enable **MCP** as the primary pattern for agent builders; enable **API** for custom apps that cannot use MCP yet. Keep the Ask AT&T knowledge domain moving as a **strategic side goal** with real staffing — not as the near-term demand fix.
+**Approve MCP or API access to live Insightful based on use case.** Keep the Ask AT&T knowledge domain as a **separate goal** with real staffing — not as the near-term demand fix.
 
-### Why MCP over API for agents?
+### By use case
 
-- Agents need a standard way to discover and call tools. MCP is that pattern.
-- One governed connector scales across many AI projects.
-- Live Insightful reduces copy-drift risk versus Ask Docs alone.
+| Use case | Pipe |
+| --- | --- |
+| Agents / agent platforms | **MCP** |
+| Custom apps / backends | **API** |
 
-### Why still API?
-
-- Many internal tools will not support MCP immediately.
-- Search / Lookup / usage patterns fit backends and embedded AI features.
-- Same live knowledge; different client surface.
+Neither pipe alone covers every AI project. Choose the right one per request. Same live Insightful knowledge either way.
 
 ### Why not lead with the knowledge domain?
 
@@ -42,7 +39,7 @@ Enable **MCP** as the primary pattern for agent builders; enable **API** for cus
 Walk top → bottom:
 
 1. **Who needs knowledge:** agent builders, custom AI tools, Ask AT&T employees  
-2. **How they connect:** MCP (primary now) · API (companion) · Knowledge domain (side goal)  
+2. **How they connect:** MCP (by use case) · API (by use case) · Knowledge domain (separate)  
 3. **Where knowledge lives:**  
    - Left: **live Insightful on Stravito** (MCP + API) — semantic layer, taxonomy, collections  
    - Right: **Ask AT&T copy** — already uploaded; golden questions next; sync forever  
@@ -66,7 +63,7 @@ Indicative **8–10 weeks** to gated pilot, then ongoing:
 | Regression ops | Ongoing | Re-test on sync/model change |
 
 **You are here:** between corpus ready and designing the golden set.  
-**Say out loud:** MCP + API enablement runs in parallel — domain go-live is not a blocker for agent demand.
+**Say out loud:** MCP / API enablement by use case runs in parallel — domain go-live is not a blocker.
 
 ---
 
@@ -81,11 +78,11 @@ Build 50–150 questions with a cross-functional SME panel.
 Cover:
 
 - High-volume business questions (brands, segments, campaigns, categories)
-- AT&T taxonomy and proprietary terms (confirm the model uses our language)
+- AT&T taxonomy and proprietary terms
 - Time- and region-sensitive questions
 - Ambiguous / multi-doc synthesis questions
 - “Should refuse / insufficient evidence” questions (negative controls)
-- Collection-specific questions (prove curated collections still matter)
+- Collection-specific questions
 
 Owner: Knowledge Steward. Contributors: Insights SME panel.
 
@@ -94,7 +91,7 @@ Owner: Knowledge Steward. Contributors: Insights SME panel.
 For each question, stewards/SMEs write:
 
 - The expected answer (concise, decision-useful)
-- Must-cite source documents (and metadata fields that should surface)
+- Must-cite source documents (and metadata that should surface)
 - Acceptable alternate phrasings
 - Hard fail criteria (e.g., wrong brand, outdated wave, missing citation)
 
@@ -129,11 +126,7 @@ Do not open broad Ask AT&T access until:
 
 ### Step 6 — Ongoing regression
 
-Re-run golden set when:
-
-- Corpus syncs in bulk
-- Model or Ask Docs config changes
-- Major taxonomy or collection changes land
+Re-run golden set when corpus syncs in bulk, model/config changes, or major taxonomy/collection changes land.
 
 ---
 
@@ -141,37 +134,26 @@ Re-run golden set when:
 
 **Standing accountability (indicative 0.4–0.6 FTE):**
 
-1. Own golden-question bank and truth-answer currency  
+1. Own golden-question bank and truth-answer currency with SME panel  
 2. Decide domain access requests against CMO-endorsed policy  
 3. Monitor quality metrics; escalate wrong-answer incidents  
 4. Coordinate Insightful → Ask Docs sync and metadata gaps  
-5. Partner with MCP/API owner so agents and Ask AT&T cite the same sources  
+5. Partner with MCP/API access owner so agents and Ask AT&T cite the same sources  
 6. Quarterly CMO readout: quality, usage, risk, capacity  
 
 **SME panel:** rotating insights experts for truth answers and edge cases (~40–80 hours stand-up; light monthly thereafter).
 
-**MCP/API program owner (0.25–0.4 FTE):** vendor enablement, client onboarding, scopes, rate limits, usage reporting, anti-sprawl guardrails.
-
----
-
-## Processes to put in place (domain)
-
-- Access request + approval workflow (and periodic access review)
-- Content sync runbook (success/fail, stale content, metadata parity checks)
-- Incident process for incorrect or sensitive answers
-- Change calendar tied to golden-set regression
-- Feedback loop from Ask AT&T users back into Insightful tagging/collections
-- Clear statement: domain is complementary until quality and UX thresholds are met — Stravito remains system of engagement for curated research
+**MCP/API access owner (0.25–0.4 FTE):** vendor enablement, use-case intake (MCP vs API), client onboarding, scopes, rate limits, usage reporting, anti-sprawl guardrails.
 
 ---
 
 ## Decisions to ask the CMO for
 
-1. Approve MCP + API commercial/security path for sanctioned AI projects  
-2. Name MCP/API owner and interim Knowledge Steward; confirm SME panel  
-3. Fund domain stand-up (golden questions + steward model) without blocking agent demand on domain go-live  
+1. Approve MCP or API access to live Insightful **by use case** for sanctioned AI projects  
+2. Name access owner and interim Knowledge Steward; confirm SME panel  
+3. Fund domain stand-up (golden questions + steward model) without blocking demand on domain go-live  
 4. Endorse access policy / anti-workaround stance  
 
 ## Closing line
 
-Serve demand with MCP + API. Build the domain with discipline. That keeps Insightful’s advantage working for AT&T’s AI ecosystem — and keeps Ask AT&T on a path that is governed, tested, and staffed to last.
+Approve the right pipe by use case. Build the domain as its own goal. That keeps Insightful’s advantage working for AT&T’s AI ecosystem — and keeps Ask AT&T on a path that is governed, tested, and staffed to last.

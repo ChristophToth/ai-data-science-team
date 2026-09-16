@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Insightful AI Access — CMO Recommendation</title>
+  <style>
+    :root {
+      --att-blue: #067ab4;
+      --att-blue-hl: #3aa5dc;
+      --att-dark: #0c2577;
+      --att-orange: #ff7200;
+      --black: #111;
+      --gray: #5a5a5a;
+      --lt: #f2f4f7;
+      --med: #bcc9d6;
+      --green: #6ebb1f;
+      --white: #fff;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; height: 100%;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: #1a1a1a; color: var(--black);
+    }
+    .chrome {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 18px; background: #0c2577; color: #fff; font-size: 13px;
+    }
+    .chrome button {
+      background: var(--att-blue); color: #fff; border: 0; border-radius: 4px;
+      padding: 8px 14px; font-weight: 600; cursor: pointer;
+    }
+    .chrome button:hover { background: var(--att-blue-hl); }
+    .deck {
+      height: 100%; padding: 56px 16px 24px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .slide {
+      display: none;
+      width: min(1100px, 96vw);
+      aspect-ratio: 16 / 9;
+      background: #fff;
+      padding: 36px 40px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,.45);
+    }
+    .slide.on { display: block; }
+    .slide::before {
+      content: ""; position: absolute; left: 0; top: 0; right: 0; height: 8px;
+      background: var(--att-blue);
+    }
+    .slide.title-slide {
+      background: var(--att-dark); color: #fff;
+    }
+    .slide.title-slide::before { background: var(--att-blue); width: 10px; height: 100%; right: auto; }
+    h1 { margin: 0 0 12px; font-size: clamp(22px, 2.6vw, 32px); color: var(--att-dark); line-height: 1.15; }
+    .title-slide h1 { color: #fff; font-size: clamp(28px, 3.4vw, 42px); }
+    .eyebrow { color: var(--att-blue); font-weight: 700; font-size: 13px; letter-spacing: .04em; margin-bottom: 8px; }
+    .title-slide .eyebrow { color: var(--att-blue-hl); }
+    .sub { color: var(--gray); font-size: 15px; margin: 0 0 18px; }
+    .title-slide .sub { color: var(--med); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+    .card {
+      background: var(--lt); border-radius: 10px; padding: 16px 18px;
+    }
+    .card h3 { margin: 0 0 8px; font-size: 16px; color: var(--att-dark); }
+    .card p { margin: 0; color: var(--gray); font-size: 13px; line-height: 1.4; }
+    .label { font-size: 11px; font-weight: 700; color: var(--att-blue); margin-bottom: 6px; }
+    .label.orange { color: var(--att-orange); }
+    ul { margin: 8px 0 0; padding-left: 18px; color: var(--gray); font-size: 14px; line-height: 1.45; }
+    li { margin-bottom: 6px; }
+    .arch {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 8px;
+    }
+    .wire {
+      border: 1.5px solid var(--att-blue); border-radius: 10px; padding: 12px;
+      text-align: center; background: #fff; min-height: 72px;
+    }
+    .wire.orange { border-color: var(--att-orange); }
+    .wire.dark { border-color: var(--att-dark); }
+    .wire strong { display: block; font-size: 13px; color: var(--att-dark); margin-bottom: 4px; }
+    .wire span { font-size: 11px; color: var(--gray); }
+    .arrow { text-align: center; color: var(--att-blue); font-size: 18px; margin: 4px 0; }
+    .bottom-systems {
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; margin-top: 8px;
+    }
+    .sys {
+      border-radius: 10px; padding: 14px; border: 1.5px solid var(--att-blue);
+      background: #e8f1f8;
+    }
+    .sys.copy { border-color: var(--att-dark); background: #f5f5f8; }
+    .sys strong { display: block; font-size: 13px; color: var(--att-dark); margin-bottom: 6px; }
+    .sys span { font-size: 12px; color: var(--gray); line-height: 1.35; }
+    .timeline {
+      display: flex; gap: 8px; margin-top: 10px; align-items: stretch;
+    }
+    .tstep {
+      flex: 1; background: var(--lt); border-radius: 8px; padding: 10px 8px;
+      text-align: center; border-top: 3px solid var(--att-dark);
+    }
+    .tstep.done { border-top-color: var(--att-blue); background: #e8f1f8; }
+    .tstep.here { border-top-color: var(--att-orange); background: #fff3e0; }
+    .tstep.ops { border-top-color: var(--green); background: #e8f5e9; }
+    .tstep .when { font-size: 10px; font-weight: 700; color: var(--att-blue); }
+    .tstep.here .when { color: var(--att-orange); }
+    .tstep h4 { margin: 6px 0; font-size: 12px; color: var(--att-dark); }
+    .tstep p { margin: 0; font-size: 10px; color: var(--gray); line-height: 1.3; }
+    .callout {
+      margin-top: 14px; background: #fff3e0; border-radius: 8px; padding: 12px 14px;
+      font-size: 13px; color: var(--black);
+    }
+    .callout strong { color: var(--att-orange); }
+    .footer {
+      position: absolute; left: 40px; right: 40px; bottom: 16px;
+      display: flex; justify-content: space-between; font-size: 11px; color: var(--gray);
+    }
+    .procon { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .pro { background: #e8f5e9; border-radius: 10px; padding: 14px; }
+    .con { background: #fff3e0; border-radius: 10px; padding: 14px; }
+    .pro h3 { color: var(--green); margin: 0 0 8px; font-size: 15px; }
+    .con h3 { color: var(--att-orange); margin: 0 0 8px; font-size: 15px; }
+    .decision { font-size: 18px; line-height: 1.35; color: #fff; background: var(--att-dark); border-radius: 10px; padding: 18px; margin: 10px 0 14px; }
+    .hint { color: #bcc9d6; font-size: 12px; margin-left: 12px; }
+  </style>
+</head>
+<body>
+  <div class="chrome">
+    <div>
+      <strong>Insightful AI Access — CMO</strong>
+      <span class="hint">← → keys or buttons · Esc for overview tip: use browser full screen (F11)</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span id="counter">1 / 12</span>
+      <button type="button" id="prev">Prev</button>
+      <button type="button" id="next">Next</button>
+    </div>
+  </div>
+
+  <div class="deck" id="deck">
+
+    <section class="slide title-slide on">
+      <div class="eyebrow">RECOMMENDATION FOR CMO</div>
+      <h1>Unlocking Insightful for AT&T’s AI Ecosystem</h1>
+      <p class="sub">Meet rising demand for agent-ready knowledge — with governance, without workarounds, without losing what Stravito already perfected.</p>
+      <p class="sub" style="margin-top:40px">Marketing Knowledge Management | Confidential</p>
+    </section>
+
+    <section class="slide">
+      <h1>The ask</h1>
+      <p class="sub">Today, content and the AI assistant live only in Insightful (Stravito, AT&T-branded).</p>
+      <p class="sub" style="margin-top:-8px;font-weight:700;color:#111">Approve MCP or API access by use case. Keep the knowledge domain as a separate goal.</p>
+      <div class="grid-2">
+        <div class="card">
+          <div class="label orange">NEAR-TERM — BY USE CASE</div>
+          <h3>Approve MCP or API access to live Insightful</h3>
+          <p>Agents / agent platforms → MCP. Custom apps / backends → API. Same live knowledge. Right pipe per project. Stops workarounds.</p>
+        </div>
+        <div class="card">
+          <div class="label">SEPARATE GOAL</div>
+          <h3>Advance Ask AT&T knowledge domain</h3>
+          <p>Security copy already uploaded. Next: golden questions, truth answers, governance, stewards. Not the near-term demand fix.</p>
+        </div>
+      </div>
+      <div class="footer"><span>AT&T Marketing | Insightful AI Access</span><span>2</span></div>
+    </section>
+
+    <section class="slide">
+      <h1>Why this matters now</h1>
+      <p class="sub">AI curiosity is growing. So is interest in Insightful’s knowledge base.</p>
+      <div class="grid-3">
+        <div class="card"><div class="label">DEMAND</div><h3>People want Insightful inside their AI projects</h3><p>Teams building agents need a sanctioned path to insert curated insights into product experiences.</p></div>
+        <div class="card"><div class="label">GOVERNANCE</div><h3>If access lags, workarounds appear</h3><p>Unauthorized copies and private RAG experiments create security, quality, and brand risk.</p></div>
+        <div class="card"><div class="label">PROPRIETARY LENS</div><h3>Stravito is not just a document store</h3><p>Semantic layer, AT&T taxonomy, marketing-research AI, and curated collections built by teams everywhere.</p></div>
+      </div>
+      <div class="footer"><span>AT&T Marketing | Insightful AI Access</span><span>3</span></div>
+    </section>
+
+    <section class="slide">
+      <h1>Three paths</h1>
+      <div class="card" style="margin-bottom:10px"><strong>01 MCP</strong> — Standard tool interface so agents search/retrieve Insightful live.</div>
+      <div class="card" style="margin-bottom:10px"><strong>02 API</strong> — Search / Lookup for apps and backends that need Insightful in custom AI tools.</div>
+      <div class="card"><strong>03 Knowledge domain</strong> — Ask AT&T / Ask Docs Q&A against a secured copy (content + metadata already loaded).</div>
+      <div class="footer"><span>AT&T Marketing | Insightful AI Access</span><span>4</span></div>
+    </section>
+
+    <section class="slide">
+      <h1>Architecture wireframe — how options connect</h1>
+      <p class="sub">One curated knowledge base. Three sanctioned connection patterns. No shadow copies.</p>
+      <div class="arch">
+        <div class="wire orange"><strong>Agent builders</strong><span>Agents / agent platforms</span></div>
+        <div class="wire"><strong>Custom AI-backed tools</strong><span>Apps, intranet, backends</span></div>
+        <div class="wire dark"><strong>Employees via Ask AT&T</strong><span>Ask Docs Q&A</span></div>
+      </div>
+      <div class="arch" style="margin-top:6px">
+        <div class="arrow">↓</div><div class="arrow">↓</div><div class="arrow">↓</div>
+      </div>
+      <div class="arch">
+        <div class="wire orange"><strong>MCP · BY USE CASE</strong><span>Agents / agent platforms · live Insightful</span></div>
+        <div class="wire"><strong>API · BY USE CASE</strong><span>Custom apps / backends · live Search / Lookup</span></div>
+        <div class="wire dark"><strong>Knowledge domain · SEPARATE</strong><span>Ask AT&T Q&A on secured copy</span></div>
+      </div>
+      <div class="bottom-systems">
+        <div class="sys"><strong>Insightful on Stravito · LIVE</strong><span>Semantic layer · AT&T taxonomy · marketing-research assistant · curated collections — source of truth for MCP & API</span></div>
+        <div class="sys copy"><strong>Ask AT&T domain · COPY</strong><span>Content + metadata uploaded. You are here → golden questions. Sync / freshness ongoing.</span></div>
+      </div>
+      <div class="footer"><span>AT&T Marketing | Insightful AI Access</span><span>5</span></div>
+    </section>
+
+    <section class="slide">
+      <h1>Option comparison (short)</h1>
+      <div class="procon">
+        <div class="pro"><h3>MCP — Pros</h3><ul><li>Agent-native</li><li>Live source</li><li>One pattern across AI projects</li></ul></div>
+        <div class="con"><h3>MCP — Watch-outs</h3><ul><li>Vendor + security enablement</li><li>Not every tool supports MCP yet</li></ul></div>
+        <div class="pro"><h3>API — Pros</h3><ul><li>Fits custom apps / REST teams</li><li>Live Insightful</li></ul></div>
+        <div class="con"><h3>API — Watch-outs</h3><ul><li>More per-project engineering</li><li>Needs central guardrails</li></ul></div>
+        <div class="pro"><h3>Domain — Pros</h3><ul><li>Meets security copy ask</li><li>Natural Ask AT&T surface</li></ul></div>
+        <div class="con"><h3>Domain — Watch-outs</h3><ul><li>Answers a copy (freshness)</li><li>Needs golden Qs, stewards, testing</li></ul></div>
+      </div>
+      <div class="footer"><span>AT&T Marketing | Insightful AI Access</span><span>6</span></div>
+    </section>
+
+    <section class="slide">
+      <h1>Recommendation</h1>
+      <div class="decision">Approve MCP or API access to live Insightful based on use case. Treat the Ask AT&T knowledge domain as a separate goal — not the near-term demand solution.</div>
+      <ul>
+        <li><strong>Today:</strong> content and the AI assistant exist only inside Insightful (Stravito, AT&T-branded).</li>
+        <li><strong>By use case:</strong> agents → MCP; custom apps/backends → API.</li>
+        <li><strong>Separate goal:</strong> Ask AT&T domain copy needs golden questions, stewards, and governance before broad trust.</li>
+      </ul>
+      <div class="footer"><span>AT&T Marketing | Insightful AI Access</span><span>7</span></div>
+    </section>
+
+    <section class="slide">
+      <h1>Knowledge domain journey + timeframe</h1>
+      <p class="sub">Indicative ~8–10 week stand-up to gated pilot, then ongoing steward ops. Calibrate to SME capacity.</p>
+      <div class="timeline">
+        <div class="tstep done"><div class="when">DONE</div><h4>Corpus ready</h4><p>Content + metadata copied into Ask Docs</p></div>
+        <div class="tstep here"><div class="when">Wks 1–2</div><h4>Design golden set</h4><p>50–150 Qs across taxonomy & edge cases</p></div>
+        <div class="tstep"><div class="when">Wks 2–4</div><h4>Truth answers</h4><p>SME writes expected answers + cites</p></div>
+        <div class="tstep"><div class="when">Wks 4–5</div><h4>Blind run & score</h4><p>Ask Docs vs truth scorecard</p></div>
+        <div class="tstep"><div class="when">Wks 5–8</div><h4>Tune & retest</h4><p>Fix retrieval; hit threshold</p></div>
+        <div class="tstep"><div class="when">Wk 8–9</div><h4>Gate go-live</h4><p>Policy + support + quality signed</p></div>
+        <div class="tstep ops"><div class="when">Ongoing</div><h4>Regression ops</h4><p>Re-test on sync / model change</p></div>
+      </div>
+      <div class="callout"><strong>YOU ARE HERE</strong> — Upload complete. Next: design golden questions + truth answers with SME panel. MCP + API enablement runs in parallel and is not blocked by domain go-live.</div>
+      <div class="footer"><span>AT&T Marketing | Insightful AI Access</span><span>8</span></div>
+    </section>
+
+    <section class="slide">
+      <h1>What the knowledge domain still needs</h1>
+      <div class="grid-4">
+        <div class="card"><h3>Golden Q&A pack</h3><p>Versioned questions + truth answers.</p></div>
+        <div class="card"><h3>Governance & access</h3><p>Who may query / publish; audit.</p></div>
+        <div class="card"><h3>Knowledge steward</h3><p>Named owner for quality & sync.</p></div>
+        <div class="card"><h3>Sync & freshness</h3><p>Insightful → domain cadence.</p></div>
+        <div class="card"><h3>Testing & release</h3><p>Golden-set scorecard gate.</p></div>
+        <div class="card"><h3>Ongoing support</h3><p>Help path + feedback loop.</p></div>
+        <div class="card"><h3>Success metrics</h3><p>Quality %, citation hit rate.</p></div>
+        <div class="card"><h3>Risk controls</h3><p>Wrong-answer escalation.</p></div>
+      </div>
+      <div class="footer"><span>AT&T Marketing | Insightful AI Access</span><span>9</span></div>
+    </section>
+
+    <section class="slide">
+      <h1>Human impact (indicative)</h1>
+      <ul>
+        <li><strong>Knowledge Steward</strong> — 0.4–0.6 FTE ongoing</li>
+        <li><strong>Insights SME panel</strong> — ~40–80 hrs stand-up; 4–8 hrs/mo</li>
+        <li><strong>KM / platform ops</strong> — ~20–40 hrs stand-up; 2–4 hrs/wk</li>
+        <li><strong>Security / compliance</strong> — ~15–25 hrs initial</li>
+        <li><strong>MCP / API program owner</strong> — 0.25–0.4 FTE</li>
+      </ul>
+      <p class="sub" style="margin-top:16px">Calibrate with real capacity before the CMO meeting.</p>
+      <div class="footer"><span>AT&T Marketing | Insightful AI Access</span><span>10</span></div>
+    </section>
+
+    <section class="slide">
+      <h1>Decision requested</h1>
+      <div class="grid-2">
+        <div class="card"><div class="label orange">1</div><h3>Approve MCP or API by use case</h3><p>Authorize engagement so sanctioned AI projects can get the right pipe to live Insightful.</p></div>
+        <div class="card"><div class="label orange">2</div><h3>Name program owners</h3><p>Access owner (MCP/API intake) + interim Knowledge Steward; confirm SME panel.</p></div>
+        <div class="card"><div class="label orange">3</div><h3>Fund domain as separate goal</h3><p>Golden-question stand-up + steward model — without blocking demand on domain go-live.</p></div>
+        <div class="card"><div class="label orange">4</div><h3>Set access policy</h3><p>Which use cases get MCP vs API; who gets Ask AT&T domain access; anti-workaround stance.</p></div>
+      </div>
+      <div class="footer"><span>AT&T Marketing | Insightful AI Access</span><span>11</span></div>
+    </section>
+
+    <section class="slide title-slide">
+      <h1>Approve the right pipe by use case.<br/>Build the domain as its own goal.</h1>
+      <p class="sub">Keep content and assistant on live Insightful today — open MCP or API where teams need it — and staff Ask AT&T so the copy path is governed, tested, and ready when it earns trust.</p>
+    </section>
+
+  </div>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    let i = 0;
+    const counter = document.getElementById('counter');
+    function show(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, idx) => s.classList.toggle('on', idx === i));
+      counter.textContent = (i + 1) + ' / ' + slides.length;
+    }
+    document.getElementById('prev').onclick = () => show(i - 1);
+    document.getElementById('next').onclick = () => show(i + 1);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(i + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(i - 1); }
+    });
+  </script>
+</body>
+</html>
