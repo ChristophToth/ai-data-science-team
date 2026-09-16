@@ -13,6 +13,7 @@
 | `view.html` | **Easiest** — open in any browser (← → / Prev-Next) |
 | `CMO_Insightful_AI_Access_Recommendation.pptx` | Executive PowerPoint |
 | `SPEAKER_NOTES.md` | Talking points + golden-question process |
+| `BRIEFING_CHIEF_OF_STAFF.md` | CoS briefing: status, risks, next moves |
 | `build_deck.py` | Regenerates the PPTX |
 
 ## Story spine
